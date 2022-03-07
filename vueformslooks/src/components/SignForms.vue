@@ -12,6 +12,12 @@
             <option value="developer">Web Developer</option>
             <option value="designer">Web Designer</option>
         </select>
+
+         <label>Skills:</label>
+         <input type="text" v-model="tempSkill" @keyup.alt="addskill">        
+           <div v-for="skill in skills" :key="skill" class="pill">
+              <span @click="deleteskill(skill)">{{skill}}</span> 
+           </div>
         <div class="terms">
           <input type="checkbox" v-model="terms" required>
           <label>Accept terms and conditions</label>
@@ -29,6 +35,7 @@
            <input type="checkbox" value="Edo" v-model="names">
            <label>Obaseki</label>
         </div>
+        
     </form>
 
     <p>Email: {{ email }}</p>
@@ -48,9 +55,26 @@ export default{
             pass:'',
             role:'',
             terms:false,
-            names:[]
+            names:[],
+            tempSkill:'',
+            skills:[]
         }
     },
+    methods:{
+        addskill(e){
+             if(e.key === ',' && this.tempSkill){
+                 if(!this.skills.includes(this.tempSkill)){
+                    this.skills.push(this.tempSkill)
+                 }
+                 this.tempSkill = ''
+             }
+        },
+        deleteskill(skill){
+            this.skills = this.skills.filter((item) => {
+                return skill !==item
+            })
+        }
+    }
 }
 </script>
 <style>
@@ -86,6 +110,18 @@ input[type="checkbox"]{
     margin: 0 10px 0 0;
     position: relative;
     top: 2px;
+}
+.pill{
+    display: inline-block;
+    margin:20px 10px 0 0;
+    padding: 6px 12px;
+    background: #eee;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color: #777;
+    cursor: pointer;
 }
 
 </style>
