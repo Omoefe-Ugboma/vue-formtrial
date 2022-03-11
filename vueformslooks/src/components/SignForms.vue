@@ -1,6 +1,6 @@
 <template>
 <div>
-        <form>
+        <form @submit="handleSubmit">
         <label>Email:</label>
         <input type="email" required v-model="email">
 
@@ -23,7 +23,7 @@
           <label>Accept terms and conditions</label>
         </div>
 
-        <div>
+        <!-- <div>
            <input type="checkbox" value="lagos" v-model="names">
            <label>Sanwolu</label>
         </div>
@@ -34,7 +34,7 @@
         <div>
            <input type="checkbox" value="Edo" v-model="names">
            <label>Obaseki</label>
-        </div>
+        </div> -->
         
     </form>
 
@@ -42,7 +42,7 @@
     <p>Password: {{ pass }}</p>
     <p>Role: {{role}}</p>
     <p>Terms accepted: {{ terms }}</p>
-    <P>Multiple Display: {{names}}</P>
+    <!-- <P>Multiple Display: {{names}}</P> -->
 </div>
 </template>
 
@@ -55,7 +55,7 @@ export default{
             pass:'',
             role:'',
             terms:false,
-            names:[],
+            // names:[],
             tempSkill:'',
             skills:[]
         }
