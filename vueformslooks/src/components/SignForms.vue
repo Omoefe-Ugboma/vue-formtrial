@@ -1,27 +1,27 @@
 <template>
 <div>
-        <form @submit="handleSubmit">
-        <label>Email:</label>
-        <input type="email" required v-model="email">
+    <form @submit.prevent="handleSubmit">
+    <label>Email:</label>
+    <input type="email" required v-model="email">
 
-        <label>Password:</label>
-        <input type="password" required v-model="pass">
+    <label>Password:</label>
+    <input type="password" required v-model="pass">
+    <div v-if="passwordError" class="error">{{passwordError}}</div>
+    <label>Role:</label>
+    <select v-model="role">
+        <option value="developer">Web Developer</option>
+        <option value="designer">Web Designer</option>
+    </select>
 
-        <label>Role:</label>
-        <select v-model="role">
-            <option value="developer">Web Developer</option>
-            <option value="designer">Web Designer</option>
-        </select>
-
-         <label>Skills:</label>
-         <input type="text" v-model="tempSkill" @keyup.alt="addskill">        
-           <div v-for="skill in skills" :key="skill" class="pill">
-              <span @click="deleteskill(skill)">{{skill}}</span> 
-           </div>
-        <div class="terms">
-          <input type="checkbox" v-model="terms" required>
-          <label>Accept terms and conditions</label>
+        <label>Skills:</label>
+        <input type="text" v-model="tempSkill" @keyup.alt="addskill">        
+        <div v-for="skill in skills" :key="skill" class="pill">
+            <span @click="deleteskill(skill)">{{skill}}</span> 
         </div>
+    <div class="terms">
+        <input type="checkbox" v-model="terms" required>
+        <label>Accept terms and conditions</label>
+    </div>
 
         <!-- <div>
            <input type="checkbox" value="lagos" v-model="names">
@@ -35,7 +35,9 @@
            <input type="checkbox" value="Edo" v-model="names">
            <label>Obaseki</label>
         </div> -->
-        
+        <div class="submit">
+            <button>Create an Account</button>
+        </div>
     </form>
 
     <p>Email: {{ email }}</p>
@@ -57,7 +59,8 @@ export default{
             terms:false,
             // names:[],
             tempSkill:'',
-            skills:[]
+            skills:[],
+            passwordError:''
         }
     },
     methods:{
@@ -73,6 +76,18 @@ export default{
             this.skills = this.skills.filter((item) => {
                 return skill !==item
             })
+        },
+        handleSubmit(){
+            // console.log('form submitted');
+            this.passwordError = this.pass.length > 5 ?
+            '':'Password must be at least 6 characters long'
+            if(!this.passwordError){
+                console.log('email:', this.email)
+                console.log('password:', this.pass)
+                console.log('role:', this.role)
+                console.log('terms:', this.terms)
+                console.log('skills:', this.skills)
+            }
         }
     }
 }
@@ -123,5 +138,22 @@ input[type="checkbox"]{
     color: #777;
     cursor: pointer;
 }
-
+button{
+    background: #0b6dff;
+    border: 0;
+    padding: 10px 20px;
+    margin-top: 20px;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.submit{
+    text-align: center;
+}
+.error{
+    color: red;
+    margin-top: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
 </style>
